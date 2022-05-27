@@ -159,7 +159,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       Allows the user to specify the root if '.' is provided.
       rsync is used to prevent file duplication. */
     await execute(
-      `rsync -q -av --checksum --progress ${action.folderPath}/. ${
+      `rsync -q -av --checksum --progress ${(process.platform === "win32")?action.folderPath.replaceAll('\\', '\/'):action.folderPath}/. ${
         action.targetFolder
           ? `${temporaryDeploymentDirectory}/${action.targetFolder}`
           : temporaryDeploymentDirectory
